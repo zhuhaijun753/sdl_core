@@ -36,7 +36,7 @@ class DeviceAppsLauncher {
  private:
   application_manager::ApplicationManager& app_mngr_;
   const AppLaunchSettings& settings_;
-  std::auto_ptr<DeviceAppsLauncherImpl> impl_;
+  utils::SharedPtr<DeviceAppsLauncherImpl> impl_;
   friend class DeviceAppsLauncherImpl;
   DISALLOW_COPY_AND_ASSIGN(DeviceAppsLauncher);
 };
