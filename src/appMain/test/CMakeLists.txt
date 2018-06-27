@@ -1,4 +1,4 @@
-# Copyright (c) 2016, Ford Motor Company
+# Copyright (c) 2018, Ford Motor Company
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -28,45 +28,17 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-include(${CMAKE_SOURCE_DIR}/tools/cmake/helpers/sources.cmake)
-
-include_directories(
+include_directories (
   ${GMOCK_INCLUDE_DIRECTORY}
-  ${COMPONENTS_DIR}/application_manager/include/
-  ${COMPONENTS_DIR}/application_manager/include/application_manager/
-  ${COMPONENTS_DIR}/application_manager/include/application_manager/commands/
-  ${COMPONENTS_DIR}/application_manager/include/application_manager/commands/hmi/
-  ${COMPONENTS_DIR}/application_manager/include/application_manager/commands/mobile/
-  ${COMPONENTS_DIR}/application_manager/test/include/
-  ${COMPONENTS_DIR}/application_manager/test/include/application_manager/
-  ${CMAKE_SOURCE_DIR}/src
 )
 
-set(COMMANDS_TEST_DIR ${AM_TEST_DIR}/commands)
-
-file(GLOB SOURCES
-  ${COMMANDS_TEST_DIR}/*
-  ${COMPONENTS_DIR}/application_manager/test/mock_message_helper.cc
-  ${COMPONENTS_DIR}/application_manager/test/mock_application_helper.cc
-  ${COMPONENTS_DIR}/application_manager/src/smart_object_keys.cc
-  ${COMPONENTS_DIR}/application_manager/src/message.cc
-  ${COMMANDS_TEST_DIR}/hmi/*
-  ${COMMANDS_TEST_DIR}/hmi/hmi_notifications/*
-  ${COMMANDS_TEST_DIR}/mobile/*
+set(testSources
+  $<TARGET_OBJECTS:LowVoltageHandlerObjLibrary>
+  ${CMAKE_SOURCE_DIR}/src/appMain/test/low_voltage_signals_handler_test.cc
 )
 
 set(LIBRARIES
   gmock
-  Utils
-  SmartObjects
-  HMI_API
-  MOBILE_API
-  ApplicationManager
-  AMHMICommandsLibrary
-  AMMobileCommandsLibrary
-  connectionHandler
-  jsoncpp
-  Policy
 )
 
-create_cotired_test("commands_test" "${SOURCES}" "${LIBRARIES}" )
+create_test(low_voltage_signals_handler_test "${testSources}" "${LIBRARIES}")
